@@ -62,14 +62,14 @@ function Verification() {
 
   return (
     <div className="verification-container">
-      <h1>Face Recognition</h1>
+      <h1>Faites-vous vérifier</h1>
       <form onSubmit={handleSubmit}>
         <div>
-          <label>ID Image:</label>
+          <label>Carte identité:</label>
           <button type="button" onClick={() => handleCaptureClick('id')}>Take ID Image</button>
           {idImage && (
             <div>
-              <h3>ID Image Preview:</h3>
+              <h3>Carte identité:</h3>
               <img src={URL.createObjectURL(idImage)} alt="ID" width={160} height={160} />
             </div>
           )}
