@@ -1,0 +1,42 @@
+.instructions-container {
+    text-align: left;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+  }
+  
+  .step {
+    display: flex;
+    align-items: center;
+    margin: 20px 0;
+  }
+  
+  .icon {
+    font-size: 24px;
+    margin-right: 10px;
+  }
+  
+  .step span {
+    font-weight: bold;
+  }
+  
+  .description {
+    margin-left: 34px; /* align with the text after the icon and span */
+    margin-top: -10px;
+    margin-bottom: 20px;
+    padding: 0 20px;
+  }
+  
+  .continue-button {
+    background-color: #f0b90b;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 16px;
+    margin: 20px 0;
+  }
+  
+  .continue-button:hover {
+    background-color: #d8a409;
+  }
+  

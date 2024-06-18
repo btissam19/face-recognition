@@ -1,0 +1,45 @@
+.landing-container {
+    text-align: center;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+  }
+  
+  .steps {
+    margin: 20px 0;
+  }
+  
+  .step {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  
+  .icon {
+    width: 24px;
+    height: 24px;
+    margin-right: 10px;
+  }
+  
+  .terms {
+    display: flex;
+    align-items: center;
+    margin: 20px 0;
+  }
+  
+  .terms input {
+    margin-right: 10px;
+  }
+  
+  .continue-button {
+    background-color: #f0b90b;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  
+  .continue-button:hover {
+    background-color: #d8a409;
+  }
+  
