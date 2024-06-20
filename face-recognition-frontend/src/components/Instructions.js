@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { FaIdCard, FaCamera } from 'react-icons/fa';
-import './Instructions.css';
+import '../style/Instructions.css';
 
 function Instructions() {
   return (

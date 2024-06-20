@@ -1,9 +1,9 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import Landing from './Landing';
-import Instructions from './Instructions';
-import Verification from './Verification';
-import Confidality from './Confidality';
+import Landing from './components/Landing';
+import Instructions from './components/Instructions';
+import Verification from './components/Verification';
+import Confidality from './components/Confidality';
 
 function App() {
   return (

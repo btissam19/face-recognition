@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { FaIdCard, FaCamera } from 'react-icons/fa';
-import './Landing.css';
+import '../style/Landing.css'
 
 function Landing() {
   return (

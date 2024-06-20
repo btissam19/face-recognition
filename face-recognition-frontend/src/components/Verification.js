@@ -1,22 +1,24 @@
 import React, { useState, useRef } from 'react';
 import Webcam from 'react-webcam';
-import './Verification.css';
+import '../style/Verification.css'
 
 function Verification() {
   const [idImage, setIdImage] = useState(null);
   const [selfieImage, setSelfieImage] = useState(null);
   const [result, setResult] = useState(null);
   const [showWebcam, setShowWebcam] = useState(false);
-  const [currentCapture, setCurrentCapture] = useState(null);
   const [error, setError] = useState(null);
   const webcamRef = useRef(null);
 
-  const handleCaptureClick = (type) => {
-    setShowWebcam(true);
-    setCurrentCapture(type);
+  const handleIdImageChange = (e) => {
+    setIdImage(e.target.files[0]);
   };
 
-  const captureImage = () => {
+  const handleSelfieCaptureClick = () => {
+    setShowWebcam(true);
+  };
+
+  const captureSelfie = () => {
     const imageSrc = webcamRef.current.getScreenshot();
     const byteString = atob(imageSrc.split(',')[1]);
     const ab = new ArrayBuffer(byteString.length);
@@ -25,14 +27,8 @@ function Verification() {
       ia[i] = byteString.charCodeAt(i);
     }
     const blob = new Blob([ab], { type: 'image/jpeg' });
-    const file = new File([blob], "capture.jpg", { type: "image/jpeg" });
-
-    if (currentCapture === 'id') {
-      setIdImage(file);
-    } else {
-      setSelfieImage(file);
-    }
-
+    const file = new File([blob], "selfie.jpg", { type: "image/jpeg" });
+    setSelfieImage(file);
     setShowWebcam(false);
   };
 
@@ -62,45 +58,40 @@ function Verification() {
 
   return (
     <div className="verification-container">
-      <h1>Faites-vous vérifier</h1>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>Carte identité:</label>
-          <button type="button" onClick={() => handleCaptureClick('id')}>Take ID Image</button>
-          {idImage && (
-            <div>
-              <h3>Carte identité:</h3>
-              <img src={URL.createObjectURL(idImage)} alt="ID" width={160} height={160} />
-            </div>
-          )}
+      <h1>Vérification</h1>
+      <form onSubmit={handleSubmit} className="verification-form">
+        <div className="form-group">
+          <label>ID Image:</label>
+          <input type="file" onChange={handleIdImageChange} className="file-input" />
         </div>
-        <div>
+        <div className="form-group">
           <label>Selfie Image:</label>
-          <button type="button" onClick={() => handleCaptureClick('selfie')}>Take Selfie</button>
+          <button type="button" onClick={handleSelfieCaptureClick} className="capture-button">Take Selfie</button>
+          {showWebcam && (
+            <div className="webcam-container">
+              <Webcam
+                audio={false}
+                ref={webcamRef}
+                screenshotFormat="image/jpeg"
+                width={320}
+                height={240}
+                className="webcam"
+              />
+              <button type="button" onClick={captureSelfie} className="capture-button">Capture Selfie</button>
+            </div>
+          )}
           {selfieImage && (
-            <div>
+            <div className="image-preview">
               <h3>Selfie Preview:</h3>
-              <img src={URL.createObjectURL(selfieImage)} alt="Selfie" width={160} height={160} />
+              <img src={URL.createObjectURL(selfieImage)} alt="selfie" width={160} height={160} className="preview-image" />
             </div>
           )}
         </div>
-        {showWebcam && (
-          <div className="webcam-container">
-            <Webcam
-              audio={false}
-              ref={webcamRef}
-              screenshotFormat="image/jpeg"
-              width={320}
-              height={240}
-            />
-            <button type="button" onClick={captureImage}>Capture</button>
-          </div>
-        )}
-        <button type="submit">Submit</button>
+        <button type="submit" className="submit-button">Submit</button>
       </form>
-      {error && <div className="error">{error}</div>}
+      {error && <div className="error-message">{error}</div>}
       {result && (
-        <div>
+        <div className="result-container">
           <h2>Result</h2>
           <p>Similarity Score: {result.similarity_score}</p>
           <p>Match Status: {result.match_status}</p>

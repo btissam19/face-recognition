@@ -1,0 +1,97 @@
+.verification-container {
+  text-align: center;
+  margin: 20px auto;
+  max-width: 600px;
+  padding: 20px;
+  margin-top: 150px;
+}
+
+.verification-container h1 {
+  margin-bottom: 20px;
+  font-size: 24px;
+  color: #333;
+}
+
+.verification-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.form-group {
+  margin-bottom: 20px;
+  width: 100%;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: bold;
+  color: #555;
+}
+
+.file-input {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.capture-button {
+  padding: 10px 20px;
+  border: none;
+  background-color: #f0b90b;
+  color: white;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.capture-button:hover {
+  background-color: #f0b90b;
+}
+
+.webcam-container {
+  margin-top: 20px;
+}
+
+.webcam {
+  margin-bottom: 10px;
+}
+
+.image-preview {
+  margin-top: 20px;
+}
+
+.preview-image {
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 5px;
+}
+
+.submit-button {
+  padding: 12px 24px;
+  border: none;
+  background-color: #28a745;
+  color: white;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 20px;
+}
+
+.submit-button:hover {
+  background-color: #218838;
+}
+
+.error-message {
+  color: red;
+  margin-top: 20px;
+}
+
+.result-container {
+  margin-top: 20px;
+}
+
+.result-container h2 {
+  margin-bottom: 10px;
+}
