@@ -1,58 +1,38 @@
 .verification-container {
-  text-align: center;
-  margin: 20px auto;
   max-width: 600px;
+  margin: 0 auto;
   padding: 20px;
   margin-top: 150px;
 }
 
 .verification-container h1 {
-  margin-bottom: 20px;
-  font-size: 24px;
+  text-align: center;
   color: #333;
-}
-
-.verification-form {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.form-group {
   margin-bottom: 20px;
-  width: 100%;
 }
 
-.form-group label {
-  display: block;
-  margin-bottom: 8px;
-  font-weight: bold;
+.capture-container {
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.capture-container h2 {
   color: #555;
-}
-
-.file-input {
-  width: 100%;
-  padding: 8px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
+  margin-bottom: 10px;
 }
 
 .capture-button {
   padding: 10px 20px;
+  background-color:#f0b90b;;
+  color: #fff;
   border: none;
-  background-color: #f0b90b;
-  color: white;
   border-radius: 4px;
   cursor: pointer;
-  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
 .capture-button:hover {
-  background-color: #f0b90b;
-}
-
-.webcam-container {
-  margin-top: 20px;
+  background-color:#f0b90b;;
 }
 
 .webcam {
@@ -60,23 +40,26 @@
 }
 
 .image-preview {
-  margin-top: 20px;
+  margin-bottom: 20px;
+  text-align: center;
 }
 
 .preview-image {
   border: 1px solid #ddd;
   border-radius: 4px;
-  padding: 5px;
+}
+
+.verification-form {
+  text-align: center;
 }
 
 .submit-button {
-  padding: 12px 24px;
-  border: none;
+  padding: 10px 20px;
   background-color: #28a745;
-  color: white;
+  color: #fff;
+  border: none;
   border-radius: 4px;
   cursor: pointer;
-  margin-top: 20px;
 }
 
 .submit-button:hover {
@@ -84,14 +67,16 @@
 }
 
 .error-message {
-  color: red;
-  margin-top: 20px;
+  color: #d9534f;
+  text-align: center;
+  margin-bottom: 20px;
 }
 
 .result-container {
-  margin-top: 20px;
+  text-align: center;
 }
 
 .result-container h2 {
+  color: #333;
   margin-bottom: 10px;
 }

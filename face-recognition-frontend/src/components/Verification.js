@@ -1,25 +1,40 @@
 import React, { useState, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Webcam from 'react-webcam';
-import '../style/Verification.css'
+import '../style/Verification.css'; // Import the CSS file
 
 function Verification() {
+  const [idImageCaptured, setIdImageCaptured] = useState(false);
   const [idImage, setIdImage] = useState(null);
   const [selfieImage, setSelfieImage] = useState(null);
   const [result, setResult] = useState(null);
-  const [showWebcam, setShowWebcam] = useState(false);
   const [error, setError] = useState(null);
+  const [showIdWebcam, setShowIdWebcam] = useState(false);
+  const [showSelfieWebcam, setShowSelfieWebcam] = useState(false);
+  const [idImageUrl, setIdImageUrl] = useState(null);
+  const [selfieImageUrl, setSelfieImageUrl] = useState(null);
   const webcamRef = useRef(null);
+  const navigate = useNavigate();
 
-  const handleIdImageChange = (e) => {
-    setIdImage(e.target.files[0]);
-  };
-
-  const handleSelfieCaptureClick = () => {
-    setShowWebcam(true);
+  const captureIdImage = () => {
+    const imageSrc = webcamRef.current.getScreenshot();
+    setIdImageUrl(imageSrc);
+    const byteString = atob(imageSrc.split(',')[1]);
+    const ab = new ArrayBuffer(byteString.length);
+    const ia = new Uint8Array(ab);
+    for (let i = 0; i < byteString.length; i++) {
+      ia[i] = byteString.charCodeAt(i);
+    }
+    const blob = new Blob([ab], { type: 'image/jpeg' });
+    const file = new File([blob], "id_image.jpg", { type: "image/jpeg" });
+    setIdImage(file);
+    setIdImageCaptured(true);
+    setShowIdWebcam(false);
   };
 
   const captureSelfie = () => {
     const imageSrc = webcamRef.current.getScreenshot();
+    setSelfieImageUrl(imageSrc);
     const byteString = atob(imageSrc.split(',')[1]);
     const ab = new ArrayBuffer(byteString.length);
     const ia = new Uint8Array(ab);
@@ -29,7 +44,7 @@ function Verification() {
     const blob = new Blob([ab], { type: 'image/jpeg' });
     const file = new File([blob], "selfie.jpg", { type: "image/jpeg" });
     setSelfieImage(file);
-    setShowWebcam(false);
+    setShowSelfieWebcam(false);
   };
 
   const handleSubmit = async (e) => {
@@ -53,22 +68,39 @@ function Verification() {
       setError(null);
     } catch (error) {
       setError(error.message);
+      navigate('/error');
     }
   };
 
   return (
     <div className="verification-container">
       <h1>Vérification</h1>
-      <form onSubmit={handleSubmit} className="verification-form">
-        <div className="form-group">
-          <label>ID Image:</label>
-          <input type="file" onChange={handleIdImageChange} className="file-input" />
-        </div>
-        <div className="form-group">
-          <label>Selfie Image:</label>
-          <button type="button" onClick={handleSelfieCaptureClick} className="capture-button">Take Selfie</button>
-          {showWebcam && (
-            <div className="webcam-container">
+      <div className="capture-container">
+        <button type="button" onClick={() => setShowIdWebcam(true)} className="capture-button">Open cam for ID</button>
+        {showIdWebcam && (
+          <div>
+            <Webcam
+              audio={false}
+              ref={webcamRef}
+              screenshotFormat="image/jpeg"
+              width={320}
+              height={240}
+              className="webcam"
+            />
+            <button type="button" onClick={captureIdImage} className="capture-button">Capture ID Image</button>
+          </div>
+        )}
+        {idImageUrl && (
+          <div className="image-preview">
+            <img src={idImageUrl} alt="ID" width={160} height={160} className="preview-image" />
+          </div>
+        )}
+      </div>
+      {idImageCaptured && (
+        <div className="capture-container">
+          <button type="button" onClick={() => setShowSelfieWebcam(true)} className="capture-button">Open cam for Selfie</button>
+          {showSelfieWebcam && (
+            <div>
               <Webcam
                 audio={false}
                 ref={webcamRef}
@@ -77,18 +109,21 @@ function Verification() {
                 height={240}
                 className="webcam"
               />
-              <button type="button" onClick={captureSelfie} className="capture-button">Capture Selfie</button>
+              <button type="button" onClick={captureSelfie} className="capture-button">Capture Selfie Image</button>
             </div>
           )}
-          {selfieImage && (
+          {selfieImageUrl && (
             <div className="image-preview">
-              <h3>Selfie Preview:</h3>
-              <img src={URL.createObjectURL(selfieImage)} alt="selfie" width={160} height={160} className="preview-image" />
+              <img src={selfieImageUrl} alt="Selfie" width={160} height={160} className="preview-image" />
             </div>
           )}
         </div>
-        <button type="submit" className="submit-button">Submit</button>
-      </form>
+      )}
+      {selfieImage && (
+        <form onSubmit={handleSubmit} className="verification-form">
+          <button type="submit" className="submit-button">Submit</button>
+        </form>
+      )}
       {error && <div className="error-message">{error}</div>}
       {result && (
         <div className="result-container">
