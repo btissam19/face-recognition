@@ -5,7 +5,8 @@ import Instructions from './components/Instructions';
 import Verification from './components/Verification';
 import Confidality from './components/Confidality';
 import ErrorPage from './components/ErrorPage';
-
+import CaptureDocument from './components/CaptureDocument';
+import LiveDetection from './components/LiveDetection';
 function App() {
   return (
     <Router>
@@ -13,8 +14,9 @@ function App() {
         <Routes>
           <Route path="/" element={<Landing />} />
           <Route path="/instructions" element={<Instructions />} />
-          <Route path="/verification" element={<Verification />} />
           <Route path="/confidality" element={<Confidality />} />
+          <Route path="/LiveDetection" element={<LiveDetection />} />
+          <Route path="/verification" element={<CaptureDocument />} />
           <Route path="/error" element={<ErrorPage />} />
         </Routes>
       </div>

@@ -1,4 +1,5 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify ,send_file
+
 import cv2
 import dlib
 import torch
@@ -24,7 +25,28 @@ def preprocess_face(face_img):
     face_img = (face_img / 255.0 - 0.5) * 2  
     face_img = torch.tensor(face_img).permute(2, 0, 1).unsqueeze(0).float()  
     return face_img
+UPLOAD_FOLDER = 'uploads'
+if not os.path.exists(UPLOAD_FOLDER):
+    os.makedirs(UPLOAD_FOLDER)
+@app.route('/save-screenshot', methods=['POST'])
+def save_screenshot():
+    if 'screenshot' not in request.files:
+        return 'No file part', 400
+    file = request.files['screenshot']
+    if file.filename == '':
+        return 'No selected file', 400
+    if file:
+        file_path = os.path.join(UPLOAD_FOLDER, 'screenshot.png')
+        file.save(file_path)
+        return 'File saved successfully', 200
 
+@app.route('/get-screenshot', methods=['GET'])
+def get_screenshot():
+    file_path = os.path.join(UPLOAD_FOLDER, 'screenshot.png')
+    if os.path.exists(file_path):
+        return send_file(file_path, mimetype='image/png')
+    else:
+        return 'Screenshot not found', 404
 @app.route('/match_faces', methods=['POST'])
 def match_faces():
     id_image = request.files['id_image']
@@ -81,6 +103,7 @@ def match_faces():
         'id_face_image': id_face_b64,
         'selfie_face_image': selfie_face_b64
     })
+
 
 if __name__ == '__main__':
     app.run(debug=True)

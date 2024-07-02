@@ -36,7 +36,7 @@ function Confidality() {
           <input type="checkbox" required />
           En cliquant sur le bouton « Continuer », je confirme avoir lu l'Avis de confidentialité et donne mon consentement au traitement de mes données personnelles, y compris biométriques, tel que décrit le présent Notification de traitement des données personnelles.
         </label>
-        <Link to="/verification">
+        <Link to="/LiveDetection">
           <button className="accept-button">
             ACCEPTER ET CONTINUER
           </button>
