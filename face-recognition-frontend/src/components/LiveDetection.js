@@ -193,151 +193,143 @@ const LiveDetection = () => {
       }
   };
   
-  // Call fetchScreenshot() where needed, such as after saving the screenshot
-  
-  //   const drawBlendShapes = async (el, blendShapes) => {
-  //     if (!blendShapes || !blendShapes[0]) {
-  //         return;
-  //     }
-  //     el.innerHTML = ""; // Clear previous blendshapes
-  //     const desiredCategoryNames = [
-  //         'mouthSmileLeft', 'mouthSmileRight',
-  //     ];
-  //     // Check if all desired blend shapes meet the score threshold
-  //     let shouldCaptureImage = true;
-  //     desiredCategoryNames.forEach(categoryName => {
-  //         const shape = blendShapes[0].categories.find(shape => shape.categoryName === categoryName);
-  //         if (!shape || shape.score < 0.70) {
-  //             shouldCaptureImage = false;
-  //         }
-  //     });
- 
-  //     if (shouldCaptureImage) {
-  //         try {
-  //             const stream = await navigator.mediaDevices.getUserMedia({ video: true });
- 
-  //             const videoElement = document.createElement('video');
-  //             videoElement.srcObject = stream;
-  //             videoElement.play();
- 
-  //             videoElement.addEventListener('loadedmetadata', async () => {
-  //                 const canvas = document.createElement('canvas');
-  //                 canvas.width = videoElement.videoWidth;
-  //                 canvas.height = videoElement.videoHeight;
-  //                 const ctx = canvas.getContext('2d');
-  //                 ctx.drawImage(videoElement, 0, 0, canvas.width, canvas.height);
- 
-  //                 // Convert canvas to Blob
-  //                 canvas.toBlob(async (blob) => {
-  //                     // Create a FormData object to send the Blob with a filename
-  //                     const formData = new FormData();
-  //                     formData.append('screenshot', blob, 'screenshot.png');
- 
-  //                     // Use fetch API to send the FormData to server endpoint
-  //                     const response = await fetch('http://127.0.0.1:5000/save-screenshot', {
-  //                         method: 'POST',
-  //                         body: formData
-  //                     });
-  //                     if (response.ok) {
-  //                         console.log('Screenshot saved successfully.') // Update the screenshot URL state
-  //                         disableWebcam();
-  //                         fetchScreenshot()
-  //                     } else {
-  //                         console.error('Failed to save screenshot.');
-  //                     }
-  //                 }, 'image/png');
- 
-  //                 // Stop video stream and remove video element
-  //                 videoElement.pause();
-  //                 stream.getVideoTracks()[0].stop();
-  //                 videoElement.remove();
-  //             });
- 
-  //         } catch (error) {
-  //             console.error('Error accessing webcam:', error);
-  //         }
-  //     } else {
-  //         desiredCategoryNames.forEach(categoryName => {
-  //             const shape = blendShapes[0].categories.find(shape => shape.categoryName === categoryName);
-  //             if (shape) {
-  //                 el.innerHTML += `
-  //                     <li class="blend-shapes-item">
-  //                         <span class="blend-shapes-label">${shape.displayName || shape.categoryName}</span>
-  //                         <span class="blend-shapes-value" style="width: calc(${+shape.score * 100}% - 120px)">${(+shape.score).toFixed(4)}</span>
-  //                     </li>
-  //                 `;
-  //             }
-  //         });
-  //     }
-  // };
-  const drawBlendShapes = async (el, blendShapes) => {
+//   const drawBlendShapes = async (el, blendShapes) => {
+//     if (!blendShapes || !blendShapes[0]) {
+//         return;
+//     }
+//     el.innerHTML = ""; // Clear previous blendshapes
+//     const desiredCategoryNames = [
+//         'mouthSmileRight',
+//         'mouthSmileLeft',
+//         'eyeLookInLeft',
+//         'eyeLookOutRight',
+//         'eyeLookInRight',
+//         'eyeLookOutLeft'
+//       ];
+
+//     let shouldCaptureImage = true;
+
+//     // Check if all desired blend shapes meet the score threshold
+//     desiredCategoryNames.forEach(categoryName => {
+//         const shape = blendShapes[0].categories.find(shape => shape.categoryName === categoryName);
+//         if (!shape || shape.score < 0.70) {
+//             console.log(`Category ${categoryName} did not meet score threshold.`);
+//             shouldCaptureImage = false;
+//         }
+//     });
+
+//     if (shouldCaptureImage) {
+//         try {
+//             // Only capture the first screenshot that meets the criteria
+//             if (!el.dataset.screenshotCaptured) {
+//                 el.dataset.screenshotCaptured = true; // Mark as captured
+
+//                 const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+
+//                 const videoElement = document.createElement('video');
+//                 videoElement.srcObject = stream;
+//                 videoElement.play();
+
+//                 videoElement.addEventListener('loadedmetadata', async () => {
+//                     const canvas = document.createElement('canvas');
+//                     canvas.width = videoElement.videoWidth;
+//                     canvas.height = videoElement.videoHeight;
+//                     const ctx = canvas.getContext('2d');
+//                     ctx.drawImage(videoElement, 0, 0, canvas.width, canvas.height);
+
+//                     // Convert canvas to Blob
+//                     canvas.toBlob(async (blob) => {
+//                         const formData = new FormData();
+//                         formData.append('screenshot', blob, 'screenshot.png');
+
+//                         // Use fetch API to send the FormData to server endpoint
+//                         const response = await fetch('http://127.0.0.1:5000/save-screenshot', {
+//                             method: 'POST',
+//                             body: formData
+//                         });
+
+//                         if (response.ok) {
+//                             console.log('Screenshot saved successfully.');
+//                             disableWebcam();
+//                             fetchScreenshot();
+//                         } else {
+//                             console.error('Failed to save screenshot.');
+//                         }
+//                     }, 'image/png');
+
+//                     // Stop video stream and remove video element
+//                     videoElement.pause();
+//                     stream.getVideoTracks()[0].stop();
+//                     videoElement.remove();
+//                 });
+//             }
+//         } catch (error) {
+//             console.error('Error accessing webcam:', error);
+//         }
+//     } else {
+//         desiredCategoryNames.forEach(categoryName => {
+//             const shape = blendShapes[0].categories.find(shape => shape.categoryName === categoryName);
+//             if (shape) {
+//                 el.innerHTML += `
+//                     <li class="blend-shapes-item">
+//                         <span class="blend-shapes-label">${shape.displayName || shape.categoryName}</span>
+//                         <span class="blend-shapes-value" style="width: calc(${+shape.score * 100}% - 120px)">${(+shape.score).toFixed(4)}</span>
+//                     </li>
+//                 `;
+//             }
+//         });
+//     }
+// };
+let currentStep = 0;
+
+const steps = [
+    {
+        actionName: 'Turn Left',
+        categoryNames: ['eyeLookInLeft', 'eyeLookOutRight'],
+        actionMessage: 'Please turn your eyes to the left.',
+        completed: false
+    },
+    {
+        actionName: 'Turn Right',
+        categoryNames: ['eyeLookInRight', 'eyeLookOutLeft'],
+        actionMessage: 'Now, turn your eyes to the right.',
+        completed: false
+    },
+    {
+        actionName: 'Smile',
+        categoryNames: ['mouthSmileRight', 'mouthSmileLeft'],
+        actionMessage: 'Great! Please smile.',
+        completed: false
+    }
+];
+
+const checkActionCompletion = (blendShapes, step) => {
+    return step.categoryNames.every(categoryName => {
+        const shape = blendShapes[0].categories.find(shape => shape.categoryName === categoryName);
+        return shape && shape.score >= 0.70;
+    });
+};
+
+const drawBlendShapes = async (el, blendShapes) => {
     if (!blendShapes || !blendShapes[0]) {
         return;
     }
+    
     el.innerHTML = ""; // Clear previous blendshapes
-    const desiredCategoryNames = [
-        'mouthSmileLeft', 'mouthSmileRight',
-    ];
-    let shouldCaptureImage = true;
 
-    // Check if all desired blend shapes meet the score threshold
-    desiredCategoryNames.forEach(categoryName => {
-        const shape = blendShapes[0].categories.find(shape => shape.categoryName === categoryName);
-        if (!shape || shape.score < 0.70) {
-            shouldCaptureImage = false;
+    if (currentStep < steps.length) {
+        // Check if current step is completed
+        if (checkActionCompletion(blendShapes, steps[currentStep])) {
+            steps[currentStep].completed = true;
+            currentStep++;
         }
-    });
+    }
 
-    if (shouldCaptureImage) {
-        try {
-            // Only capture the first screenshot that meets the criteria
-            if (!el.dataset.screenshotCaptured) {
-                el.dataset.screenshotCaptured = true; // Mark as captured
-
-                const stream = await navigator.mediaDevices.getUserMedia({ video: true });
-
-                const videoElement = document.createElement('video');
-                videoElement.srcObject = stream;
-                videoElement.play();
-
-                videoElement.addEventListener('loadedmetadata', async () => {
-                    const canvas = document.createElement('canvas');
-                    canvas.width = videoElement.videoWidth;
-                    canvas.height = videoElement.videoHeight;
-                    const ctx = canvas.getContext('2d');
-                    ctx.drawImage(videoElement, 0, 0, canvas.width, canvas.height);
-
-                    // Convert canvas to Blob
-                    canvas.toBlob(async (blob) => {
-                        const formData = new FormData();
-                        formData.append('screenshot', blob, 'screenshot.png');
-
-                        // Use fetch API to send the FormData to server endpoint
-                        const response = await fetch('http://127.0.0.1:5000/save-screenshot', {
-                            method: 'POST',
-                            body: formData
-                        });
-
-                        if (response.ok) {
-                            console.log('Screenshot saved successfully.');
-                            disableWebcam();
-                            fetchScreenshot();
-                        } else {
-                            console.error('Failed to save screenshot.');
-                        }
-                    }, 'image/png');
-
-                    // Stop video stream and remove video element
-                    videoElement.pause();
-                    stream.getVideoTracks()[0].stop();
-                    videoElement.remove();
-                });
-            }
-        } catch (error) {
-            console.error('Error accessing webcam:', error);
-        }
-    } else {
-        desiredCategoryNames.forEach(categoryName => {
+    if (currentStep < steps.length) {
+        // Display message for the current step
+        el.innerHTML = `<div>${steps[currentStep].actionMessage}</div>`;
+        // Display blend shapes for the current step
+        steps[currentStep].categoryNames.forEach(categoryName => {
             const shape = blendShapes[0].categories.find(shape => shape.categoryName === categoryName);
             if (shape) {
                 el.innerHTML += `
@@ -348,8 +340,73 @@ const LiveDetection = () => {
                 `;
             }
         });
+    } else if (currentStep === steps.length && !el.dataset.screenshotCaptured) {
+        // If the last step is completed and screenshot is not captured yet
+        el.dataset.screenshotCaptured = true; // Mark as captured
+        try {
+            const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+
+            const videoElement = document.createElement('video');
+            videoElement.srcObject = stream;
+            videoElement.play();
+
+            videoElement.addEventListener('loadedmetadata', async () => {
+                const canvas = document.createElement('canvas');
+                canvas.width = videoElement.videoWidth;
+                canvas.height = videoElement.videoHeight;
+                const ctx = canvas.getContext('2d');
+                ctx.drawImage(videoElement, 0, 0, canvas.width, canvas.height);
+
+                // Convert canvas to Blob
+                canvas.toBlob(async (blob) => {
+                    const formData = new FormData();
+                    formData.append('screenshot', blob, 'screenshot.png');
+
+                    // Use fetch API to send the FormData to server endpoint
+                    const response = await fetch('http://127.0.0.1:5000/save-screenshot', {
+                        method: 'POST',
+                        body: formData
+                    });
+
+                    if (response.ok) {
+                        console.log('Screenshot saved successfully.');
+                        disableWebcam();
+                        fetchScreenshot();
+                        el.innerHTML = `<div>Screenshot captured successfully.</div>`;
+                    } else {
+                        console.error('Failed to save screenshot.');
+                    }
+                }, 'image/png');
+
+                // Stop video stream and remove video element
+                videoElement.pause();
+                stream.getVideoTracks()[0].stop();
+                videoElement.remove();
+            });
+        } catch (error) {
+            console.error('Error accessing webcam:', error);
+        }
     }
 };
+
+// Example usage:
+// Assuming 'el' is the element where blend shapes are displayed, and 'blendShapes' is the data received
+// drawBlendShapes(el, blendShapes);
+
+// Example usage:
+// Assuming 'el' is the element where blend shapes are displayed, and 'blendShapes' is the data received
+// drawBlendShapes(el, blendShapes);
+
+
+// Example usage:
+// Assuming 'el' is the element where blend shapes are displayed, and 'blendShapes' is the data received
+// drawBlendShapes(el, blendShapes);
+
+
+
+// Example usage:
+// Assuming 'el' is the element where blend shapes are displayed, and 'blendShapes' is the data received
+// drawBlendShapes(el, blendShapes);
 
 
     useEffect(() => {
