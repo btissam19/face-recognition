@@ -1,0 +1,11 @@
+build:
+  # Install dependencies
+  - npm install --prefix face-recognition-backend
+  # Build React app
+  - npm run build --prefix face-recognition-backend
+
+release:
+  web: gunicorn backend.app:app
+
+run:
+  web: gunicorn backend.app:app

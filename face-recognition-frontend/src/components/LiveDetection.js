@@ -388,27 +388,6 @@ const drawBlendShapes = async (el, blendShapes) => {
         }
     }
 };
-
-// Example usage:
-// Assuming 'el' is the element where blend shapes are displayed, and 'blendShapes' is the data received
-// drawBlendShapes(el, blendShapes);
-
-// Example usage:
-// Assuming 'el' is the element where blend shapes are displayed, and 'blendShapes' is the data received
-// drawBlendShapes(el, blendShapes);
-
-
-// Example usage:
-// Assuming 'el' is the element where blend shapes are displayed, and 'blendShapes' is the data received
-// drawBlendShapes(el, blendShapes);
-
-
-
-// Example usage:
-// Assuming 'el' is the element where blend shapes are displayed, and 'blendShapes' is the data received
-// drawBlendShapes(el, blendShapes);
-
-
     useEffect(() => {
         const enableWebcamButton = document.getElementById("webcamButton");
         if (enableWebcamButton) {
