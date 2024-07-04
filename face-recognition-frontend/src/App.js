@@ -2,7 +2,6 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Landing from './components/Landing';
 import Instructions from './components/Instructions';
-import Verification from './components/Verification';
 import Confidality from './components/Confidality';
 import ErrorPage from './components/ErrorPage';
 import CaptureDocument from './components/CaptureDocument';
